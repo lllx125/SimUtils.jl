@@ -1,6 +1,6 @@
-using AccelUtils
+using SimUtils
 using Test
 
-@testset "AccelUtils.jl" begin
+@testset "SimUtils.jl" begin
     # Write your tests here.
 end
