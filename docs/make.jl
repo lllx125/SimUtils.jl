@@ -1,14 +1,14 @@
-using AccelUtils
+using SimUtils
 using Documenter
 
-DocMeta.setdocmeta!(AccelUtils, :DocTestSetup, :(using AccelUtils); recursive=true)
+DocMeta.setdocmeta!(SimUtils, :DocTestSetup, :(using SimUtils); recursive=true)
 
 makedocs(;
-    modules=[AccelUtils],
+    modules=[SimUtils],
     authors="mattsignorelli <mgs255@cornell.edu> and contributors",
-    sitename="AccelUtils.jl",
+    sitename="SimUtils.jl",
     format=Documenter.HTML(;
-        canonical="https://bmad-sim.github.io/AccelUtils.jl",
+        canonical="https://bmad-sim.github.io/SimUtils.jl",
         edit_link="main",
         assets=String[],
     ),
@@ -18,6 +18,6 @@ makedocs(;
 )
 
 deploydocs(;
-    repo="github.com/bmad-sim/AccelUtils.jl",
+    repo="github.com/bmad-sim/SimUtils.jl",
     devbranch="main",
 )
