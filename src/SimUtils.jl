@@ -1,6 +1,6 @@
 module SimUtils
 
-# Write your package code here.
-
+include("PlotTimeSeries.jl")
+include("PinkNoiseGenerator.jl")
 
 end
