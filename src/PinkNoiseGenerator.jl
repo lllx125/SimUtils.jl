@@ -2,17 +2,22 @@ using Random
 using FFTW
 
 """
-  function gen_pinknoise(
-   beta::Float64,
-    size::Int64 = 2^9
-  )
+function gen_pinknoise(
+  beta::Float64=1.0,
+  size::Int64=2^12,
+  dt::Float64=1.0,
+  f0::Float64=1.0
+)
 
     description:
     > this function generates pink noise with frequency rolloff coefficient 'beta'
 
-    parameter:
+    positional parameter:
     beta             -- type:Float64, frequency rolloff coefficient
-    size             -- type:Int64, default to 10^24, number of points
+    size             -- type:Int64, number of points
+    keyword parameter:
+    dt               -- type:Float64, the difference of between each data, total time = size * dt, unit: s
+    f0               -- type:Float64, the spectrum has the shape (f0/f)^(beta), unit: Hz
 
     Note: 
     the algorithm is based on 
@@ -22,20 +27,16 @@ using FFTW
 gen_pinknoise
 
 function gen_pinknoise(
-  beta::Float64,
-  size::Int64=2^9
+  beta::Float64=1.0,
+  size::Int64=2^12;
+  dt::Float64=1.0,
+  f0::Float64=1.0
 )
   # Calculate Frequencies
-  f = rfftfreq(size)
+  f = rfftfreq(size) .* 2
   # Build scaling factors for all frequencies
-  s_scale = f .^ (-beta / 2.0)
+  s_scale = ((f0 * dt) ./ f) .^ (beta)
   s_scale[1] = s_scale[2]
-
-  # Calculate theoretical output standard deviation from scaling
-  w = copy(s_scale[2:end])
-  w[end] *= (1 + (size % 2)) / 2.0 # correct f = +-0.5
-  sigma = 2 * sqrt(sum(w .^ 2)) / size
-  #print(sigma)
 
   size = length(f)
 
@@ -56,8 +57,8 @@ function gen_pinknoise(
   # Combine power + corrected phase to Fourier components
   s = sr + im .* si
 
-  # Transform to real time series & scale to unit variance
-  return irfft(s, size * 2 - 2) ./ sigma
+  # Transform to real time series 
+  return irfft(s, size * 2 - 2)
 
 end
 
