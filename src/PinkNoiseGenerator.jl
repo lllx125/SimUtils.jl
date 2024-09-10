@@ -10,14 +10,14 @@ function gen_pinknoise(
 )
 
     description:
-    > this function generates pink noise with frequency rolloff coefficient 'beta'
+    > this function generates pink noise with frequency rolloff coefficient 'beta'. The spectrum has the shape (f0/f)^(beta)
 
     positional parameter:
     beta             -- type:Float64, frequency rolloff coefficient
     size             -- type:Int64, number of points
     keyword parameter:
     dt               -- type:Float64, the difference of between each data, total time = size * dt, unit: s
-    f0               -- type:Float64, the spectrum has the shape (f0/f)^(beta), unit: Hz
+    f0               -- type:Float64, unit: Hz
 
     Note: 
     the algorithm is based on 
